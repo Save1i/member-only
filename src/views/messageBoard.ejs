@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board</title>
+</head>
+<body>
+    <a href="/user/log-out">log out</a>
+        <a href="/user/log-in">log in</a>
+    <% if(messages) { %> 
+        <ul>
+            <% messages.forEach(element => { %>
+                <li><%= element.title %></li>
+                <li><%= element.message %></li>
+                <li>from: <%= element.nickname ? element.nickname : "anoninst" %></li>
+                <br>
+          <% }) %>
+        </ul>
+    <% } %>
+    
+</body>
+</html>
