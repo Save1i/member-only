@@ -12,7 +12,31 @@ async function getAllUsers() {
     return users
 }
 
+async function getUserByName(nickname: string) {
+    const rows = await sql.query("SELECT * FROM Users WHERE nickname=$1", [nickname])
+    console.log(rows)
+    return rows
+}
+
+async function getUserById(id: number) {
+    const rows = await sql.query("SELECT * FROM Users WHERE id=$1", [id])
+    return rows
+}
+
+async function messageGet(isAuth: boolean) {
+    let rows;
+    if(isAuth) {
+        rows = await sql.query("SELECT messages.id, title, message, nickname FROM Messages LEFT JOIN USERS ON USERS.ID = Messages.ID")
+    } else {
+        rows = await sql.query("SELECT * FROM Messages")
+    }
+    return rows
+}
+
 export default {
     insertUser,
     getAllUsers,
+    getUserByName,
+    getUserById,
+    messageGet,
 }
