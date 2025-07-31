@@ -26,11 +26,15 @@ async function getUserById(id: number) {
 async function messageGet(isAuth: boolean) {
     let rows;
     if(isAuth) {
-        rows = await sql.query("SELECT messages.id, title, message, nickname FROM Messages LEFT JOIN USERS ON USERS.ID = Messages.ID")
+        rows = await sql.query("SELECT messages.user_id, title, message, nickname FROM Messages LEFT JOIN USERS ON USERS.ID = Messages.user_id")
     } else {
         rows = await sql.query("SELECT * FROM Messages")
     }
     return rows
+}
+
+async function messagePost(title:string, message: string, id: number) {
+    await sql.query("INSERT INTO Messages (title, message, user_id) VALUES ($1, $2, $3)", [title, message, id])
 }
 
 export default {
@@ -39,4 +43,5 @@ export default {
     getUserByName,
     getUserById,
     messageGet,
+    messagePost,
 }
