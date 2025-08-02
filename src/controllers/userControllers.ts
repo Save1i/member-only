@@ -3,6 +3,12 @@ import query from "../queries/queries"
 import bcrypt from "bcrypt"
 import passport from "passport"
 
+interface PassportSession {
+  passport?: {
+    user: number;
+  };
+}
+
 async function createUserPost(req: Request, res: Response) {
     const {firstName, lastName, nickName, password} = req.body
     const hashPasword = await bcrypt.hash(password, 10)
@@ -28,9 +34,19 @@ async function getAllUsers(req: Request, res: Response) {
     }
 }
 
+async function getUser(req:Request, res: Response) {
+    const isAuth = req.isAuthenticated()
+    const session = req.session as PassportSession;
+    const id = session.passport?.user as number // временно
+    const user = await query.getUserById(id)
+    res.render("profile", {user, isAuth})
+
+}
+
 export default {
     createUserPost,
     createUserGet,
     getAllUsers,
     loginUserGet,
+    getUser,
 }
