@@ -21,5 +21,6 @@ router.get("/log-out", (req, res, next) => {
   });
 });
 router.get("/", userControllers.getAllUsers)
+router.get("/profile", userControllers.getUser)
 
 export default router
