@@ -9,8 +9,9 @@ interface PassportSession {
 
 async function getAllMessages(req: Request, res: Response) {
     console.log(req.isAuthenticated())
-    const messages = await query.messageGet(req.isAuthenticated())
-    res.render("messageBoard", {messages})
+    const isAuth = req.isAuthenticated()
+    const messages = await query.messageGet(isAuth)
+    res.render("messageBoard", {messages, isAuth})
 }
 
 async function createMessagePost(req: Request, res: Response) {
