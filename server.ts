@@ -81,6 +81,10 @@ passport.deserializeUser(async (id: number, done) => {
 
 app.use("/", router)
 
+app.get("/{*splat}", (req: Request, res: Response) => {
+  res.status(404).send("404")
+})
+
 app.listen(3000, () => {
   console.log("Server running at http://localhost:3000");
 });
