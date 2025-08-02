@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <a href="/message">messages</a>
+    <% if(user && isAuth){ %>
+        <p>First name:</p>
+        <p><%= user[0].first_name %></p>
+        <p>Last name:</p>
+        <p><%= user[0].last_name %></p>
+        <p>Nick name:</p>
+        <p><%= user[0].nickname %></p>
+        <a href="/user/log-out">log out</a>
+    <% }else{ %>
+         <a href="/user/log-in">log in</a>
+        <br>
+        <p>or</p>
+        <a href="/user/sign-up">create account</a>
+        <% } %>
+</body>
+</html>
