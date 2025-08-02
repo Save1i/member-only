@@ -6,8 +6,16 @@
     <title>Board</title>
 </head>
 <body>
-    <a href="/user/log-out">log out</a>
-    <a href="/user/log-in">log in</a>
+    <% if(isAuth){ %>
+        <a href="/user/log-out">log out</a>
+        <a href="/user/profile">profile</a>
+    <% }else{ %>
+        <a href="/user/log-in">log in</a>
+        <br>
+        <p>or</p>
+        <a href="/user/sign-up">create account</a>
+        <br>
+    <% } %>
     <a href="/message/create">write message</a>
     <% if(messages) { %> 
         <ul>
