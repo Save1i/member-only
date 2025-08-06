@@ -23,13 +23,18 @@ async function createUserGet(req: Request, res: Response) {
 }
 
 async function loginUserGet(req: Request, res: Response) {
-    res.render('login', {req})
+  const messages = req.session.messages || [];
+  const errorMessage = messages.length > 0 ? messages[messages.length - 1] : null;
+
+  req.session.messages = [];
+
+  res.render("login", { errorMessage });
 }
 
 async function getAllUsers(req: Request, res: Response) {
     if(req.isAuthenticated()) {
         const users = await query.getAllUsers()
-        console.log(users)
+        console.log(users, "users")
         return users
     } else {
         res.redirect("/user/login")
