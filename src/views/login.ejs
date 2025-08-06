@@ -6,13 +6,14 @@
     <title>log-in</title>
 </head>
 <body>
-    <a href="/user/log-out">log out</a>
-     <form action="log-in" method="post">
+    <a href="/message">message</a>
+    <form action="log-in" method="post">
         <label for="nickname">Nick name:</label>
         <input type="text" name="nickname" id="nickname">
         <label for="password">Password:</label>
         <input type="text" name="password" id="password">
         <button type="submit">sign-in</button>
-</form>
+    </form>
+    <p><%= errorMessage %></p>
 </body>
 </html>
