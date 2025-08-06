@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import query from "../queries/queries"
 import bcrypt from "bcrypt"
 import passport from "passport"
-import { body } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 interface PassportSession {
   passport?: {
@@ -11,15 +11,34 @@ interface PassportSession {
 }
 
 async function createUserPost(req: Request, res: Response) {
-    const {firstName, lastName, nickName, password} = req.body
-    // body('password').isLength({ min: 5 }).withMessage("password must be at least 5")
-    const hashPasword = await bcrypt.hash(password, 10)
-    await query.insertUser(firstName, lastName, nickName, hashPasword)
-    res.json({firstName, lastName, nickName, password})
+    const info = req.body
+    const warning = validationResult(req).array()
+    if(warning.length > 0) {
+        return res.render('registration', {warning, info})
+    }
+        const {firstName, lastName, nickName, password} = req.body
+    try {
+        const existingUser = await query.getUserByName(nickName)
+        if(existingUser.length > 0) {
+            const warning = [{msg: "Nickname already taken"}] 
+            return res.render('registration', {warning, info})
+        }
+        const hashPasword = await bcrypt.hash(password, 10)
+        console.log(info, "post")
+        await query.insertUser(firstName, lastName, nickName, hashPasword)
+        return res.redirect('/user/log-in')
+    } catch (error) {
+        console.error("Error creating user:", error);
+        return res.status(500).json({ error: "Server error" });
+    }
+   
 }
 
 async function createUserGet(req: Request, res: Response) {
-    res.render('registration', {req})
+    const info = req.body
+    console.log(info, "get")
+    const warning = validationResult(req).array()
+    res.render('registration', {warning, info})
 }
 
 async function loginUserGet(req: Request, res: Response) {
