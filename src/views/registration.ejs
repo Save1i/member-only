@@ -7,31 +7,21 @@
 </head>
 <body>
     <a href="/message">message</a>
-    <form action="sign-up" method="post" onsubmit="return validateForm()">
+    <form action="sign-up" method="post">
         <label for="firstName">First name:</label>
-        <input type="text" name="firstName" id="firstName">
+        <input type="text" name="firstName" id="firstName" value="<%= info ? info.firstName : '' %>" >
         <label for="lastName">Last name:</label>
-        <input type="text" name="lastName" id="lastName">
+        <input type="text" name="lastName" id="lastName" value="<%= info ? info.lastName : '' %>">
         <label for="nickName">Nick name:</label>
-        <input type="text" name="nickName" id="nickName">
+        <input type="text" name="nickName" id="nickName" value="<%= info ? info.nickName : '' %>">
         <label for="password">Password:</label>
-        <input type="text" name="password" id="password">
+        <input type="text" name="password" id="password" value="<%= info ? info.password : '' %>">
         <button type="submit">create</button>
 </form>
+    <% if(warning){ %>
+        <% warning.forEach(error => { %>
+            <p><%= error.msg %></p>
+        <% }); %>
+        <% } %>
 </body>
 </html>
-
-<script>
-function validateForm() {
-    const password = document.getElementById("password").value;
-    if (password.length < 8) {
-        alert("Пароль должен содержать минимум 8 символов.");
-        return false;
-    }
-    if (password.length > 20) {
-        alert("Пароль не должен превышать 20 символов.");
-        return false;
-    }
-    return true; // Всё ок, отправляем форму
-}
-</script>
