@@ -1,10 +1,11 @@
 import {Router} from "express"
 import userControllers from "@/controllers/userControllers"
 import passport from "passport"
+import validate from "../middleware/validation"
 
 const router = Router()
 
-router.post("/sign-up", userControllers.createUserPost)
+router.post("/sign-up", validate.validateUser, userControllers.createUserPost)
 router.get("/sign-up", userControllers.createUserGet)
 router.get("/log-in", userControllers.loginUserGet)
 router.post("/log-in", passport.authenticate('local', {
