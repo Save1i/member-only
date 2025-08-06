@@ -6,8 +6,8 @@
     <title>sign-up</title>
 </head>
 <body>
-    <a href="/user/log-out">log out</a>
-    <form action="sign-up" method="post">
+    <a href="/message">message</a>
+    <form action="sign-up" method="post" onsubmit="return validateForm()">
         <label for="firstName">First name:</label>
         <input type="text" name="firstName" id="firstName">
         <label for="lastName">Last name:</label>
@@ -20,3 +20,18 @@
 </form>
 </body>
 </html>
+
+<script>
+function validateForm() {
+    const password = document.getElementById("password").value;
+    if (password.length < 8) {
+        alert("Пароль должен содержать минимум 8 символов.");
+        return false;
+    }
+    if (password.length > 20) {
+        alert("Пароль не должен превышать 20 символов.");
+        return false;
+    }
+    return true; // Всё ок, отправляем форму
+}
+</script>

@@ -7,9 +7,9 @@ const router = Router()
 router.post("/sign-up", userControllers.createUserPost)
 router.get("/sign-up", userControllers.createUserGet)
 router.get("/log-in", userControllers.loginUserGet)
-router.post("/login", passport.authenticate('local', {
+router.post("/log-in", passport.authenticate('local', {
     successRedirect: '/message',
-    failureRedirect: '/user/login',
+    failureRedirect: '/user/log-in',
     failureFlash: false
 }))
 router.get("/log-out", (req, res, next) => {
