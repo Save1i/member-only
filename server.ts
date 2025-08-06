@@ -40,18 +40,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(
-  new LocalStrategy(( { usernameField: 'nickname', passwordField: 'password' }), 
+  new LocalStrategy( { usernameField: 'nickname', passwordField: 'password' }, 
   async (nickname, password,done) => {
         console.log("LocalStrategy called:", nickname); 
     try {
       const rows  = await queries.getUserByName(nickname)
       const user = rows[0];
 
-      const match = await bcrypt.compare(password, user.password)
-
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
+
+      const match = await bcrypt.compare(password, user.password)
+
       if (!match) {
         return done(null, false, { message: "Incorrect password" });
       }
