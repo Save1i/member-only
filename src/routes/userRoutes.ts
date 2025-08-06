@@ -9,6 +9,7 @@ router.get("/sign-up", userControllers.createUserGet)
 router.get("/log-in", userControllers.loginUserGet)
 router.post("/log-in", passport.authenticate('local', {
     successRedirect: '/message',
+    failureMessage: true,
     failureRedirect: '/user/log-in',
     failureFlash: false
 }))
