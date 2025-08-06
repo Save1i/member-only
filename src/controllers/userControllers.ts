@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import query from "../queries/queries"
 import bcrypt from "bcrypt"
 import passport from "passport"
+import { body } from "express-validator";
 
 interface PassportSession {
   passport?: {
@@ -11,6 +12,7 @@ interface PassportSession {
 
 async function createUserPost(req: Request, res: Response) {
     const {firstName, lastName, nickName, password} = req.body
+    // body('password').isLength({ min: 5 }).withMessage("password must be at least 5")
     const hashPasword = await bcrypt.hash(password, 10)
     await query.insertUser(firstName, lastName, nickName, hashPasword)
     res.json({firstName, lastName, nickName, password})
